@@ -6,22 +6,19 @@ import signal
 
 
 def get_iam_client(profile=None):
-    if profile is None:
-        profile = 'default'
-    session = boto3.session.Session(profile_name=profile)
+    session = boto3.session.Session()
 
     client = session.client('iam')
 
     return client
 
 def check_user(profile=None):
-    if profile is None:
-        profile = 'default'
     session = boto3.session.Session(profile_name=profile)
 
-    check = session.resource('iam')
+    check = session.client('sts')
 
-    return check.CurrentUser().arn.split(':')[4]
+    return check.get_caller_identity()['Account']
+
 
 class TimeoutError(Exception):
     pass

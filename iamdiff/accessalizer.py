@@ -4,14 +4,20 @@ from iamdiff import helpers
 import concurrent.futures
 
 
-def get_service_diff(iam_client, **kwargs):
-    account_id = kwargs.get('account_id')
-    principal_type = kwargs.get('principal_type')
-    name = kwargs.get('name')
+def get_service_diff(iam_client, **kwargs):    
+    try:
+        account_id = kwargs.get('account_id')
+        principal_type = kwargs.get('principal_type')
+        name = kwargs.get('name')
+    except Exception as e:
+        print(e)
 
-    job = gen_access_details(iam_client, principal_type, name, account_id)
+    try:
+        job = gen_access_details(iam_client, principal_type, name, account_id)
+    except Exception as e:
+        print(e)
+        
     report = get_access_details(iam_client, job)
-
     raw_diff = iam_diff_lib.service_diff(report)
     final_diff = iam_diff_lib.create_diff(raw_diff)
     
