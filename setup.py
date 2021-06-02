@@ -11,7 +11,7 @@ install_requires = [
     'python-dateutil==2.8.1',
     's3transfer==0.3.0',
     'six==1.13.0',
-    'urllib3==1.25.8'
+    'urllib3==1.26.5'
 ]
 
 setup(
